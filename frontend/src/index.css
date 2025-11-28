@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+body{
+    background-color: #e0e2d9;
+}
+
+    @theme {
+    --color-primary: #b6ed02;
+    --color-secondary: #8d8d8d;
+    --color-tertiary: #000000;
+    --color-white: #ffffff;
+    --color-white-off: #F9F8F6;
+    }
+
+@font-face {
+  font-family: 'NeueMachina-Light';
+  src: url('/font/NeueMachina-Light.otf') format('opentype');
+  font-display: swap;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NeueMachina-Regular';
+  src: url('/font/NeueMachina-Regular.otf') format('opentype');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NeueMachina-Ultrabold';
+  src: url('/font/NeueMachina-Ultrabold.otf') format('opentype');
+  font-display: swap;
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+.font-light {
+  font-family: 'NeueMachina-Light', sans-serif;
+}
+
+.font-regular {
+  font-family: 'NeueMachina-Regular', sans-serif;
+}
+
+.font-ultrabold {
+  font-family: 'NeueMachina-Ultrabold', sans-serif;
+}
+
+
+/* :root {
+  --primary-color: #c0fd02;
+  --secondary-color: #8d8d8d;
+  --tertiary-color: #000000;
+} */

@@ -2,7 +2,7 @@ import React from 'react';
 
 const PhoneVideo = () => (
   <video
-    src="/Videos/boat.mp4"
+    src="https://ik.imagekit.io/chetram/boat.mp4"
     autoPlay
     loop
     muted

@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { Minus, Plus, ArrowRight, ShieldCheck, Zap, CheckCircle, Trash2 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, getCart, updateCart } from '../store/actions/productsAction';
+import Loader from './Loader';
+import MicroLoader from './MicroLoader';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -36,25 +38,29 @@ const Cart = () => {
     return () => clearTimeout(timer);
   }, [isCheckedOut, resetSystem]);
   const handleQuantityIncrease = (item) => {
+    if (activeId) return;
+    setActiveId(item.id);
     const updatedItem = { ...item, quantity: 1 };
     dispatch(updateCart(updatedItem));
-    setActiveId(item.id);
+    setTimeout(() => {
+      dispatch(getCart());
+    }, 300);
     setTimeout(() => {
       setActiveId(null);
-      dispatch(getCart());
-    }, 500);
+    }, 800);
   };
 
   const handleQuantityDecrease = (item) => {
-    if (item.quantity <= 1) return;
-    
+    if (item.quantity <= 1 || activeId) return;
+    setActiveId(item.id);
     const updatedItem = { ...item, quantity: -1 };
     dispatch(updateCart(updatedItem));
-    setActiveId(item.id);
+    setTimeout(() => {
+      dispatch(getCart());
+    }, 300);
     setTimeout(() => {
       setActiveId(null);
-      dispatch(getCart());
-    }, 500);
+    }, 800);
   };
 
   const handleClearCart = () => {
@@ -80,19 +86,19 @@ const Cart = () => {
       <div className="absolute -right-20 -top-20 w-40 h-40 bg-[#b6ed02]/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
       
       <div className="flex gap-6 items-stretch relative z-10">
-        {/* Image */}
-        <div className="relative w-28 h-28 bg-[#F9F8F6] flex items-center justify-center overflow-hidden border border-[#8d8d8d]/10 group-hover:border-[#b6ed02] transition-colors duration-500 rounded-sm">
-          <img src={item.image} alt={item.name} className="relative z-10 h-24 object-contain" />
+      
+        <div className=" relative w-28 h-28 bg-[#F9F8F6] flex items-center justify-center overflow-hidden border border-[#8d8d8d]/10 group-hover:border-[#b6ed02] transition-colors duration-500 rounded-sm">
+          <img src={item.image} alt={item.name} className="relative z-10 h-24 object-contain " />
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#b6ed02]/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out z-0"></div>
         </div>
 
-        {/* Info */}
+       
         <div className="flex-1 flex flex-col justify-between py-1">
           <div>
             <span className="text-[10px] font-mono text-[#b6ed02] font-bold tracking-wider bg-black px-1 py-0.5 mb-2 inline-block rounded-sm uppercase">
               {item.category || 'Item'}
             </span>
-            <h3 className="font-bold text-xl tracking-tight group-hover:text-[#b6ed02] transition-colors cursor-default">
+            <h3 className="font-ultrabold text-xl tracking-tight group-hover:text-black transition-colors cursor-default">
               {item.name}
             </h3>
             <div className="mt-1 text-xs text-[#8d8d8d] font-mono">
@@ -106,19 +112,30 @@ const Cart = () => {
               <div className="flex items-center bg-[#F9F8F6] border border-[#8d8d8d]/20 group-hover:border-[#b6ed02]/50 transition-colors rounded-sm">
                 <button
                   onClick={() => handleQuantityDecrease(item)}
-                  disabled={item.quantity <= 1}
+                  disabled={item.quantity <= 1 || activeId === item.id}
                   className="w-8 h-8 flex items-center justify-center hover:bg-black hover:text-white transition-colors disabled:opacity-20 disabled:cursor-not-allowed active:bg-[#b6ed02] active:text-black rounded-l-sm"
                 >
                   <Minus className="w-3 h-3" />
                 </button>
-                <div className="w-8 h-8 flex items-center justify-center overflow-hidden relative font-mono text-sm font-bold">
-                  <span className={`transition-all duration-200 ${activeId === item.id ? 'scale-150 text-[#b6ed02] blur-sm' : 'scale-100'}`}>
-                    {item.quantity || 1}
-                  </span>
+                <div className="w-8 h-8 flex items-center justify-center overflow-hidden relative">
+                  {activeId === item.id ? (
+                    <div className="flex items-center justify-center">
+                      <div className="relative h-4 w-4">
+                        {/* loader */}
+                        <div className="absolute inset-0 rounded-full border border-[#8d8d8d]/30"></div>
+                        <div className="absolute inset-0 animate-spin rounded-full border border-[#b6ed02] border-l-transparent border-r-transparent"></div>
+                        <div className="absolute inset-0.5 animate-[spin_1.5s_linear_infinite_reverse] rounded-full border border-black border-t-transparent"></div>
+                        <div className="absolute inset-0 m-auto h-1 w-1 animate-pulse rounded-full bg-[#b6ed02]"></div>
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="font-mono text-sm font-bold">{item.quantity || 1}</span>
+                  )}
                 </div>
                 <button
                   onClick={() => handleQuantityIncrease(item)}
-                  className="w-8 h-8 flex items-center justify-center hover:bg-black hover:text-white transition-colors active:bg-[#b6ed02] active:text-black rounded-r-sm"
+                  disabled={activeId === item.id}
+                  className="w-8 h-8 flex items-center justify-center hover:bg-black hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed active:bg-[#b6ed02] active:text-black rounded-r-sm"
                 >
                   <Plus className="w-3 h-3" />
                 </button>
@@ -172,9 +189,10 @@ const Cart = () => {
   }
 
   return (
-    <div className={`max-w-screen-2xl w-full px-10 mt-10 mx-auto text-black font-sans selection:bg-[#b6ed02] selection:text-black transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'} [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#e5e5e5] hover:[&::-webkit-scrollbar-thumb]:bg-[#b6ed02]`}>
+    <div className={`max-w-screen-2xl w-full px-10 mt-10 mx-auto text-black font-regular selection:bg-[#b6ed02] selection:text-black transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'} [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#e5e5e5] hover:[&::-webkit-scrollbar-thumb]:bg-[#b6ed02]`}>
       <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
         {/* Cart List */}
+        <Suspense fallback={<Loader />}>
         <div className="flex-1 space-y-8">
           <header className="flex justify-between items-center mb-8 pb-4 border-b border-[#8d8d8d]/20">
             <h1 className="text-4xl font-light uppercase tracking-tighter">
@@ -185,8 +203,8 @@ const Cart = () => {
                 onClick={handleClearCart}
                 className="flex items-center gap-2 text-xs font-mono text-[#8d8d8d] hover:text-red-500 transition-colors group"
               >
-                <Trash2 className="w-3 h-3" />
-                <span className="group-hover:underline uppercase">Clear Cart</span>
+                <Trash2 className="w-4 h-4" />
+                <span className="group-hover:underline uppercase cursor-pointer text-lg">Clear Cart</span>
               </button>
             )}
           </header>
@@ -207,6 +225,7 @@ const Cart = () => {
             </div>
           )}
         </div>
+        </Suspense>
 
         {/* Checkout Panel */}
         <div className="lg:w-80 flex-shrink-0 transition-all duration-700 ease-out">

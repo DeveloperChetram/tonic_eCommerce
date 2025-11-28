@@ -35,9 +35,9 @@ export const getCart = () => async(dispatch)=>{
 
 export const updateCart = (data) => async(dispatch)=>{
     try {
-        // console.log('data', data);
         const response = await api.post(`/cart`, data);
-        dispatch(setCart(response.data.data));
+        // Don't update cart here as POST doesn't return cart data
+        // We'll fetch cart separately after update
         console.log('updated cart response', response);
     } catch (error) {
         console.log(error);

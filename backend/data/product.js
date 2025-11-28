@@ -30,7 +30,7 @@ export const products = [
     category: "Earbuds",
     rating: 3.9,
     origin: "India",
-    stock: false
+    stock: true
   },
   {
     id: 1004,

@@ -5,7 +5,7 @@ const productsSlice = createSlice({
   initialState: {
     products: [],
     cart: [],
-
+    theme: 'light',
   },
   reducers: {
     setProducts: (state, action) => {
@@ -14,8 +14,14 @@ const productsSlice = createSlice({
     setCart: (state, action) => {
       state.cart = action.payload;
     },
+    setTheme: (state, action) => {
+      state.theme = action.payload;
+    },
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+    },
   },
 });
 
-export const { setProducts, setCart } = productsSlice.actions;
+export const { setProducts, setCart, setTheme, toggleTheme } = productsSlice.actions;
 export default productsSlice.reducer;

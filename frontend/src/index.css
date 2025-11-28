@@ -5,13 +5,13 @@ body{
    
     }
 
-    @theme {
-    --color-primary: #b6ed02;
-    --color-secondary: #8d8d8d;
-    --color-tertiary: #000000;
-    --color-white: #ffffff;
-    --color-white-off: #F9F8F6;
-    }
+      @theme {
+      --color-primary: #b6ed02;
+      --color-secondary: #8d8d8d;
+      --color-tertiary: #000000;
+      --color-white: #ffffff;
+      --color-white-off: #F9F8F6;
+      }
 
 @font-face {
   font-family: 'NeueMachina-Light';

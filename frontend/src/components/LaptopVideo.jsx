@@ -16,5 +16,6 @@ const LaptopVideo = () => (
   />
 );
 
+
 export default LaptopVideo;
 

@@ -135,10 +135,13 @@ const Navbar = () => {
           aria-pressed={theme === 'dark'}
           className={`h-12 w-12 rounded-full border transition-all duration-300 flex items-center justify-center ${
             isDarkTheme
-              ? 'bg-black border-white/30'
-              : 'bg-[var(--color-primary)] border-black/20'
+              ? 'bg-black'
+              : 'bg-[var(--color-primary)]'
           }`}
-          style={{ color: isDarkTheme ? '#ffffff' : '#000000' }}
+          style={{
+            color: isDarkTheme ? '#ffffff' : '#000000',
+            borderColor: isDarkTheme ? '#ffffff' : 'rgba(0,0,0,0.2)',
+          }}
         >
           <span className="sr-only">Toggle color theme</span>
           {isDarkTheme ? <Moon className="w-5 h-5" color="#ffffff" /> : <Sun className="w-5 h-5" color="#000000" />}

@@ -1,11 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const getInitialTheme = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('nx-theme') || 'light';
+  }
+  return 'light';
+};
+
+const persistTheme = (theme) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('nx-theme', theme);
+  }
+};
+
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
     products: [],
     cart: [],
-    theme: 'light',
+    theme: getInitialTheme(),
   },
   reducers: {
     setProducts: (state, action) => {
@@ -16,9 +29,11 @@ const productsSlice = createSlice({
     },
     setTheme: (state, action) => {
       state.theme = action.payload;
+      persistTheme(state.theme);
     },
     toggleTheme: (state) => {
       state.theme = state.theme === 'light' ? 'dark' : 'light';
+      persistTheme(state.theme);
     },
   },
 });

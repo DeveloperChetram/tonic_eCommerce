@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../store/actions/productsAction';
 
 const ArrowRightIcon = ({ className }) => (
@@ -36,6 +36,10 @@ const CyberProductCard = ({
 }) => {
   const [cartState, setCartState] = useState('idle');
   const dispatch = useDispatch();
+  const theme = useSelector((state) => state.products.theme);
+  const isDarkTheme = theme === 'dark';
+  const accentTextClass = isDarkTheme ? 'text-black' : 'text-tertiary';
+  const accentHoverTextClass = isDarkTheme ? 'group-hover/btn:text-black' : 'group-hover/btn:text-tertiary';
   // This state controls whether the data drawer should be forced open after Add to Cart
   const [drawerForcedOpen, setDrawerForcedOpen] = useState(false);
 
@@ -126,7 +130,10 @@ const CyberProductCard = ({
         }
       >
         {/* Drawer Header Tag */}
-        <div className="absolute -top-8 left-0 bg-primary text-tertiary px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm">
+        <div
+          className="absolute -top-8 left-0 bg-primary px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm"
+          style={{ color: isDarkTheme ? '#000000' : 'var(--color-tertiary)' }}
+        >
           {data.category || 'Spec_Sheet_A'}
         </div>
 
@@ -187,16 +194,15 @@ const CyberProductCard = ({
                 }
               `}
             >
-              <div className={`
-                absolute inset-0 flex items-center justify-center font-bold text-sm tracking-wide uppercase gap-2
-                ${
+              <div
+                className={`absolute inset-0 flex items-center justify-center font-bold text-sm tracking-wide uppercase gap-2 ${
                   !data.stock
                     ? 'text-white'
                     : cartState === 'idle'
-                    ? 'text-white group-hover/btn:text-tertiary'
-                    : 'text-tertiary'
-                }
-              `}>
+                    ? `text-white ${accentHoverTextClass}`
+                    : `${accentTextClass}`
+                }`}
+              >
                 {cartState === 'idle' && (
                   <>
                     <span>{data.stock?'Add to Cart':'Out of Stock'}</span>

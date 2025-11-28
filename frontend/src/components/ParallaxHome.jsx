@@ -245,7 +245,7 @@ export default function ParallaxHome() {
                 <span
                   className="text-transparent bg-clip-text font-ultrabold"
                   style={{
-                    backgroundImage: `linear-gradient(90deg, ${colors.primary}, ${colors.tertiary})`,
+                    backgroundImage: `linear-gradient(90deg, ${colors.primary}, transparent)`,
                   }}
                 >
                   O

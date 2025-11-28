@@ -8,7 +8,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(cors('http://localhost:5173'));
+app.use(cors('http://localhost:5173', 'http://localhost:5174', 'https://checkout-v1-three.vercel.app/'));
 
 app.get('/', (req, res) => {
   res.status(200).json({ success: true, message: 'Server is running' });

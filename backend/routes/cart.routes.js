@@ -5,12 +5,18 @@ export const cartRouter = express.Router();
 
 cartRouter.post('/', (req, res) => {
     try {
-        const { id,
+        const {
+            id,
             name,
             price,
             description,
             image,
-            quantity = 1 } = req.body
+            category,
+            rating,
+            origin,
+
+            quantity = 1
+        } = req.body
 
         const product = {
             id,
@@ -18,6 +24,9 @@ cartRouter.post('/', (req, res) => {
             price,
             description,
             image,
+            category,
+            rating,
+            origin,
             quantity
         }
 

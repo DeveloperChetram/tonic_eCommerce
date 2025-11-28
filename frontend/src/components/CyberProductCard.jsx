@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/actions/productsAction';
 
 const ArrowRightIcon = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" className={className}>
@@ -33,30 +35,43 @@ const CyberProductCard = ({
   }
 }) => {
   const [cartState, setCartState] = useState('idle');
-
+  const dispatch = useDispatch();
   // This state controls whether the data drawer should be forced open after Add to Cart
   const [drawerForcedOpen, setDrawerForcedOpen] = useState(false);
 
   // When the button is clicked, set forced open and control cart state/confirmation as before
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e, data) => {
     e.stopPropagation();
     if (cartState !== 'idle') return;
+
     setDrawerForcedOpen(true);
     setCartState('loading');
 
-    // Simulate API call
-    setTimeout(() => {
+    const minLoading = new Promise(resolve => setTimeout(resolve, 600));
+
+    let success = false;
+    try {
+     const actionResult = await dispatch(addToCart(data));
+     
+      success = true;
+    } catch (error) {
+      success = false;
+    }
+
+    await minLoading;
+
+    if (success) {
       setCartState('success');
-      // Only close the drawer after CONFIRMED label has been shown for 2.5s
       setTimeout(() => {
         setCartState('idle');
         setDrawerForcedOpen(false);
-      }, 2500);
-    }, 1200);
+      }, 1000);
+    } else {
+      setCartState('idle');
+      setDrawerForcedOpen(false);
+    }
   };
 
-  // Compute whether drawer is open: hover (default) OR forced open due to add to cart in progress
-  // The forced open disables the sliding closed drawer until confirmed is shown and finished
   const isDrawerOpen = drawerForcedOpen || undefined; // on mobile drawer is always open
 
   return (
@@ -157,7 +172,7 @@ const CyberProductCard = ({
             style={drawerForcedOpen ? { opacity: 1, transform: 'translateY(0)' } : undefined}
           >
             <button
-              onClick={handleAddToCart}
+              onClick={(e)=>handleAddToCart(e, data)}
               disabled={cartState !== 'idle' || !data.stock}
               className={`
                 w-full h-10 relative overflow-hidden transition-all duration-200 group/btn

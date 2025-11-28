@@ -4,11 +4,11 @@ import Cart from '../components/Cart.jsx';
 
 const MainRoutes = () => {
   return (
-    <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/cart' element={<Cart />} />
+    <Routes className='w-full'>
+      <Route path='/' element={<Home />} />
+      <Route path='/cart' element={<Cart />} />
     </Routes>
-  )
-}
+  );
+};
 
-export default MainRoutes
+export default MainRoutes;

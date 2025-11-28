@@ -2,7 +2,8 @@
 
 body{
     background-color: #e0e2d9;
-}
+   
+    }
 
     @theme {
     --color-primary: #b6ed02;
@@ -55,3 +56,4 @@ body{
   --secondary-color: #8d8d8d;
   --tertiary-color: #000000;
 } */
+

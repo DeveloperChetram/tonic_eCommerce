@@ -6,7 +6,7 @@ const Navbar = () => {
   const isCart = location.pathname === '/cart';
 
   return (
-    <nav className='w-full flex flex-col md:flex-row items-center justify-between gap-6 py-6 px-4 sm:px-8 lg:px-12 mt-4 font-sans'>
+    <nav className='w-full flex flex-col md:flex-row items-center justify-between gap-6 py-6 px-4 sm:px-8 lg:px-12 mt-4 font-sans selection:bg-primary selection:text-black'>
       
       {/* --- BRANDING / LOGO SECTION (Unchanged) --- */}
       <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ultrabold uppercase flex items-center gap-2'>

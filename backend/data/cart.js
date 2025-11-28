@@ -13,3 +13,8 @@ export const addToCart = (product) => {
 
     return cart;
 }
+
+export const clearCart = () => {
+    cart = [];
+    return cart;
+}

@@ -43,3 +43,15 @@ export const updateCart = (data) => async(dispatch)=>{
         console.log(error);
     }
 }
+
+export const clearCart = () => async(dispatch)=>{
+    try {
+        const response = await api.delete('/cart');
+        dispatch(setCart(response.data.data || []));
+        console.log('cleared cart response', response);
+    } catch (error) {
+        console.log(error);
+        // Ensure cart is set to empty array even on error
+        dispatch(setCart([]));
+    }
+}

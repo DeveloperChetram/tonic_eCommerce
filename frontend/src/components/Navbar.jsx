@@ -8,10 +8,10 @@ const Navbar = () => {
   return (
     <nav className='w-full flex flex-col md:flex-row items-center justify-between gap-6 py-6 px-4 sm:px-8 lg:px-12 mt-4 font-sans selection:bg-primary selection:text-black'>
       
-      {/* --- BRANDING / LOGO SECTION (Unchanged) --- */}
+    
       <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ultrabold uppercase flex items-center gap-2'>
         <span className="relative inline-block align-middle">
-          <span className='text-primary bg-black text-4xl py-2 px-4 relative z-10 block'>
+          <span className='text-primary text-xl sm:text-2xl md:text-3xl lg:text-6xl xl:text-4xl bg-black py-2 px-4 relative z-10 block'>
             Checkout
           </span>
           {/* corners */}
@@ -26,7 +26,7 @@ const Navbar = () => {
             <span className="absolute bottom-[-2px] right-[-2px] w-3 h-3 border-b-4 border-r-4 border-primary translate-y-[2px]" />
           </span>
         </span>
-        <span className='text-black font-regular' >   Latest Products</span>
+        <span className='text-black font-regular text-xl sm:text-2xl md:text-3xl lg:text-6xl xl:text-5xl' >   Latest Products</span>
       </h1>
 
       {/* --- TECH SMOOTH TOGGLE (UPDATED - Dark/Tech Mode) --- */}

@@ -1,6 +1,7 @@
 import express from 'express';
 import { cart } from '../data/cart.js';
 import { addToCart } from '../data/cart.js';
+import { clearCart } from '../data/cart.js';
 export const cartRouter = express.Router();
 
 cartRouter.post('/', (req, res) => {
@@ -59,3 +60,12 @@ cartRouter.get('/', (req, res) => {
     });
 });
 
+cartRouter.delete('/', (req, res) => {
+    clearCart();
+    res.status(200).json({
+        success: true,
+        message: 'Cart cleared successfully',
+        data: cart,
+        status: 'success'
+    });
+});

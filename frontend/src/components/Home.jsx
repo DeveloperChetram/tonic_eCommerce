@@ -2,6 +2,7 @@
 import { useSelector } from 'react-redux';
 import {Suspense, lazy} from 'react';
 import MicroLoader from './MicroLoader';
+import Loader from './Loader';
   const CyberProductCard = lazy(() => import('./CyberProductCard'));
 // import Navbar from './Navbar';
 const Home = () => {
@@ -40,7 +41,11 @@ const Home = () => {
     <>
     <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 mt-10" id="products">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-        {productCard}
+        {productCard?.length > 0 ? productCard : (
+          <div className="col-span-full w-full flex items-center justify-center h-full min-h-[300px]">
+            <Loader loadingText="LOADING PRODUCTS..." />
+          </div>
+        )}
       </div>
     </div>
     </>

@@ -10,9 +10,12 @@ const App = () => {
   const isDarkTheme = theme === 'dark';
 
   const footerStyles = isDarkTheme
-    ? { backgroundColor: 'var(--color-primary)', color: '#000000' }
+    ? { backgroundColor: 'var(--color-primary)', color: '#000000',  }
     : { backgroundColor: '#000000', color: '#ffffff' };
 
+    const footerTextStyles = isDarkTheme
+      ? { color: 'var(--color-white)' }
+      : { color: 'var(--color-primary)' };
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -25,10 +28,10 @@ const App = () => {
         className='w-full text-center text-sm py-2 mt-10 transition-colors duration-300'
         style={footerStyles}
       >
-        <p className='font-regular tracking-wide'>Copyright © 2025 Checkout. All rights reserved.</p>
+        <p className='font-regular tracking-wide'>Copyright © 2025 <span className='font-ultrabold text-primary' style={footerTextStyles}>Checkout</span>. All rights reserved.</p>
       </footer>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default App
+export default App;

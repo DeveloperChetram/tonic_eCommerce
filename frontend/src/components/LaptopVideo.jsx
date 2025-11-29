@@ -2,7 +2,7 @@ import React from 'react';
 
 const LaptopVideo = () => (
   <video
-    src="/Videos/lenevo2.mp4"
+    src="/Videos/lenevo2.webm"
     autoPlay
     loop
     muted

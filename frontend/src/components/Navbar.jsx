@@ -111,7 +111,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={`relative z-10 flex items-center justify-center gap-2 py-2.5 text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
-              !isCart ? 'text-black' : 'text-neutral-400 hover:text-white'
+              !isCart ? 'text-black' : 'text-neutral-400 hover:text-var(--color-white)'
             }`}
           >
             {!isCart && <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />}
@@ -121,7 +121,7 @@ const Navbar = () => {
           <NavLink
             to="/cart"
             className={`relative z-10 flex items-center justify-center gap-2 py-2.5 text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
-              isCart ? 'text-black' : 'text-neutral-400 hover:text-white'
+              isCart ? 'text-black' : 'text-neutral-400 hover:text-var(--color-white)'
             }`}
           >
             {isCart && <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />}
